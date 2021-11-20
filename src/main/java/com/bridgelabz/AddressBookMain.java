@@ -119,12 +119,22 @@ public class AddressBookMain {
                 }
                 break;
 
+                case 12:{
+                    updateData();
+                }
+
             }
 
             System.out.println("\n Do you want to continue:(y or n) ");
             ans = scan.next().charAt(0);
         } while (ans == 'y');
     }
+
+    private static void updateData() {
+        String sql = "update contact set email=? where first_name=?";
+        AddressBookJDBC.updateData("gokul", "gokulaadhi@gmail.com",sql);
+    }
+
 
     private static void retrieveData() {
         String sql = "select * from contact";
@@ -160,7 +170,8 @@ public class AddressBookMain {
                             "\nCity -  " + contact.getCity() +
                             "\nState -  " + contact.getState() +
                             "\nZip -  " + contact.getZip() +
-                            "\nEmail -  " + contact.getEmail());
+                            "\nEmail -  " + contact.getEmail() +
+                            "\nPhoneNumber - " + contact.getPhone_number());
                 });
             }
             break;
@@ -176,7 +187,8 @@ public class AddressBookMain {
                             "\nCity -  " + contact.getCity() +
                             "\nState -  " + contact.getState() +
                             "\nZip -  " + contact.getZip() +
-                            "\nEmail -  " + contact.getEmail());
+                            "\nEmail -  " + contact.getEmail() +
+                            "\nPhoneNumber - " + contact.getPhone_number());
                 });
             }
             break;
@@ -192,7 +204,8 @@ public class AddressBookMain {
                             "\nCity -  " + contact.getCity() +
                             "\nState -  " + contact.getState() +
                             "\nZip -  " + contact.getZip() +
-                            "\nEmail -  " + contact.getEmail());
+                            "\nEmail -  " + contact.getEmail() +
+                            "\nPhoneNumber - " + contact.getPhone_number());
                 });
             }
             break;
