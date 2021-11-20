@@ -10,7 +10,6 @@ public class ContactInfo {
     private long phone_number;
     private String email;
     private String date;
-    private int count;
 
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
@@ -82,14 +81,6 @@ public class ContactInfo {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     @Override
