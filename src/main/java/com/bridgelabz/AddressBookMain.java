@@ -1,10 +1,10 @@
 package com.bridgelabz;
 
-
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,6 +41,7 @@ public class AddressBookMain {
             System.out.println("12.Update data to database");
             System.out.println("13.get contact data between particular date from database");
             System.out.println("14.get city or state with its count from database");
+            System.out.println("15.Create new contact information to the database");
 
 
             System.out.print("\n\n Enter the choice What you want to do: ");
@@ -136,12 +137,42 @@ public class AddressBookMain {
                 case 14: {
                     getCountOfStateOrCity();
                 }
+                break;
+
+                case 15: {
+                    creatingNewContactInformation();
+                }
+                break;
+
 
             }
 
             System.out.println("\n Do you want to continue:(y or n) ");
             ans = scan.next().charAt(0);
         } while (ans == 'y');
+    }
+
+    private static void creatingNewContactInformation() {
+        System.out.println("\nEnter the first name: ");
+        String first_name = scan.next();
+        System.out.print("\nEnter the Last name: ");
+        last_name = scan.next();
+        System.out.print("\nEnter the Address: ");
+        address = scan.next();
+        System.out.print("\nEnter the city: ");
+        city = scan.next();
+        System.out.print("\nEnter the state: ");
+        state = scan.next();
+        System.out.print("\nEnter the zip: ");
+        zip = scan.nextInt();
+        System.out.print("\nEnter the phone number: ");
+        phone_number = scan.nextLong();
+        System.out.print("\nEnter the EmailID: ");
+        email = scan.next();
+        System.out.println("\nEnter the created date: ");
+        Date created_date = Date.valueOf(scan.next());
+        String sql = "insert into contact (first_name,last_name,address,city,state,zip,phone_number,email,created_date) values (?,?,?,?,?,?,?,?,?); ";
+        AddressBookJDBC.creatingNewContactInformation(sql, first_name, last_name, address, city, state, zip, phone_number, email, created_date);
     }
 
     private static void getCountOfStateOrCity() {
@@ -351,3 +382,4 @@ public class AddressBookMain {
         AddressBook.book.put(AddressBookMain.first_name, new Contact(AddressBookMain.first_name, last_name, address, city, state, zip, phone_number, email));
     }
 }
+

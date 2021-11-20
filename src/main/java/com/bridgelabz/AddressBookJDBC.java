@@ -1,6 +1,7 @@
 package com.bridgelabz;
 
 
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,6 +146,28 @@ public class AddressBookJDBC {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void creatingNewContactInformation(String sql, String first_name, String last_name, String address, String city, String state, int zip, long phone_number, String email, Date created_date) {
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, first_name);
+            preparedStatement.setString(2, last_name);
+            preparedStatement.setString(3, address);
+            preparedStatement.setString(4, city);
+            preparedStatement.setString(5, state);
+            preparedStatement.setInt(6, zip);
+            preparedStatement.setLong(7, phone_number);
+            preparedStatement.setString(8, email);
+            preparedStatement.setDate(9, created_date);
+            int result = preparedStatement.executeUpdate();
+            if (result > 0)
+                System.out.println("Table data updated");
+            else
+                System.out.println("Data is not updated");
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 }
