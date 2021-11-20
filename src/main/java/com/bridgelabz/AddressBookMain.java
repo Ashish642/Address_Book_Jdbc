@@ -1,5 +1,6 @@
 package com.bridgelabz;
 
+
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
@@ -37,6 +38,9 @@ public class AddressBookMain {
             System.out.println("9.Read and write the contact details in csv file");
             System.out.println("10.Read and write the contact details in json file");
             System.out.println("11.JDBC Connection and retrieve all data from database");
+            System.out.println("12.Update data to database");
+            System.out.println("13.get contact data between particular date from database");
+            System.out.println("14.get city or state with its count from database");
 
 
             System.out.print("\n\n Enter the choice What you want to do: ");
@@ -115,12 +119,22 @@ public class AddressBookMain {
                 break;
 
                 case 11: {
-                    retrieveData();
+                    retrieveDataFromDatabase();
                 }
                 break;
 
-                case 12:{
-                    updateData();
+                case 12: {
+                    updateDataInDatabase();
+                }
+                break;
+
+                case 13: {
+                    getDataFromParticularPeriod();
+                }
+                break;
+
+                case 14: {
+                    getCountOfStateOrCity();
                 }
 
             }
@@ -130,13 +144,30 @@ public class AddressBookMain {
         } while (ans == 'y');
     }
 
-    private static void updateData() {
+    private static void getCountOfStateOrCity() {
+        System.out.println("Enter City or State");
+        String input = scan.next();
+        String sql = "select " + input + ",count(" + input + ") as count from contact group by " + input + ";";
+        AddressBookJDBC.getCountOfStateOrCity(sql, input);
+    }
+
+    private static void getDataFromParticularPeriod() {
+        System.out.println("From date: ");
+        String from_date = scan.next();
+        System.out.println("To date: ");
+        String to_date = scan.next();
+        String sql = "select * from contact where created_date between cast('" + from_date + "' as date) and cast('" + to_date + "' as date);";
+        List<ContactInfo> contactInfoList = AddressBookJDBC.getDataFromParticularPeriod(sql);
+        System.out.println(contactInfoList);
+    }
+
+    private static void updateDataInDatabase() {
         String sql = "update contact set email=? where first_name=?";
-        AddressBookJDBC.updateData("gokul", "gokulaadhi@gmail.com",sql);
+        AddressBookJDBC.updateData("gokul", "gokulaadhi@gmail.com", sql);
     }
 
 
-    private static void retrieveData() {
+    private static void retrieveDataFromDatabase() {
         String sql = "select * from contact";
         List<ContactInfo> contactInfoList = AddressBookJDBC.retrieveData(sql);
         System.out.println(contactInfoList);

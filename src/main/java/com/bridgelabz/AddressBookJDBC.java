@@ -3,7 +3,9 @@ package com.bridgelabz;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class AddressBookJDBC {
@@ -116,4 +118,33 @@ public class AddressBookJDBC {
         return contactInfoList;
     }
 
+    public static void getCountOfStateOrCity(String sql, String input) {
+        ResultSet resultSet = null;
+        Map<String, Integer> contactInfoList = new HashMap<>();
+        try (Connection connection = getConnection()) {
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            if (input.equalsIgnoreCase("city")) {
+                while (resultSet.next()) {
+                    ContactInfo contactInfo = new ContactInfo();
+                    contactInfo.setCity(resultSet.getString("city"));
+                    contactInfo.setCount(resultSet.getInt("count"));
+                    contactInfoList.put(contactInfo.getCity(), contactInfo.getCount());
+                }
+                System.out.println(contactInfoList);
+            } else if (input.equalsIgnoreCase("state")) {
+                while (resultSet.next()) {
+                    ContactInfo contactInfo = new ContactInfo();
+                    contactInfo.setState(resultSet.getString("state"));
+                    contactInfo.setCount(resultSet.getInt("count"));
+                    contactInfoList.put(contactInfo.getState(), contactInfo.getCount());
+                }
+                System.out.println(contactInfoList);
+            } else
+                System.out.println("Incorrect input....");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
